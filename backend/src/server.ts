@@ -4,7 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 import { signUp, signIn } from './handlers/user';
-import { errorMiddleware } from './modules/middleware';
+import { errorMiddleware, signUpLimiter, signInLimiter } from './modules/middleware';
 
 const app = express();
 
@@ -22,6 +22,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.post(
   '/api/sign-up',
+  signUpLimiter,
   check('email').isEmail().withMessage('Invalid email'),
   check('password')
     .exists()
@@ -33,8 +34,10 @@ app.post(
   errorMiddleware,
   signUp
 );
+
 app.post(
   '/api/sign-in',
+  signInLimiter,
   check('email')
     .exists()
     .withMessage('Email is required')

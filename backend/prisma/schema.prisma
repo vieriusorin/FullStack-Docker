@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PROJECT_STATUS {
+  IN_BACKLOG
+  IN_PROGRESS
+  IN_REVIEW
+  DONE
+}
+
+enum INVOICE_STATUS {
+  PAID
+  UNPAID
+}
+
+enum USER_ROLE {
+  USER
+  MANAGER
+  ADMIN
+}
+
+model User {
+  id       String    @id @default(cuid())
+  username String    @unique @db.VarChar(255)
+  name     String
+  email    String    @unique
+  password String
+  projects Project[]
+  task     Task[]
+  position String
+  invoices Invoice[]
+  comments Comment[]
+  role     USER_ROLE @default(ADMIN)
+}
+
+model Project {
+  id           String         @id @default(cuid())
+  title        String
+  description  String
+  completed    Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  users        User?          @relation(fields: [userId], references: [id])
+  userId       String?
+  category     Category[]
+  status       PROJECT_STATUS @default(IN_BACKLOG)
+  startProject DateTime?
+  endProject   DateTime?
+  tasks        Task[]
+  client       String
+  invoices     Invoice[]
+  stakeholder  Stakeholder[]
+  comments     Comment[]
+}
+
+model Category {
+  id          String  @id @default(cuid())
+  title       String  @unique @db.VarChar(255)
+  description String
+  project     Project @relation(fields: [categoryId], references: [id])
+  categoryId  String
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String    @unique @db.VarChar(255)
+  description String
+  project     Project   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId      String
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?
+  comments    Comment[]
+}
+
+model Invoice {
+  id          String         @id @default(cuid())
+  title       String         @unique @db.VarChar(255)
+  description String
+  amount      Float
+  dueDate     DateTime
+  projectId   String
+  project     Project        @relation(fields: [projectId], references: [id])
+  status      INVOICE_STATUS @default(UNPAID)
+  user        User           @relation(fields: userId, references: [id])
+  userId      String
+}
+
+model Stakeholder {
+  id        String  @id @default(cuid())
+  name      String
+  email     String
+  role      String
+  projectId String
+  projects  Project @relation(fields: [projectId], references: [id])
+}
+
+model Comment {
+  id        String  @id @default(cuid())
+  content   String
+  projectId String?
+  taskId    String?
+  userId    String
+  parentId  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parent   Comment?  @relation("Comments", fields: [parentId], references: [id], onDelete: Cascade)
+  project  Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  task     Task?     @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  user     User?     @relation(fields: userId, references: [id], onDelete: Cascade)
+  children Comment[] @relation("Comments")
+}

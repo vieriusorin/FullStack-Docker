@@ -22,6 +22,7 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
       token
     })
   } catch (e) {
+    console.log(e);
     e.type = 'userExists';
     next(e)
   }

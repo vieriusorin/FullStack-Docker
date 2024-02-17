@@ -4,21 +4,19 @@ import prisma from '../../db';
 export const update = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { name, email, position, username } = req.body;
+    const { title, description } = req.body;
 
-    const user = await prisma.user.update({
+    const category = await prisma.category.update({
       where: { id },
       data: {
-        name,
-        email,
-        position,
-        username,
+        title,
+        description
       },
     });
 
     res.status(201).json({
       status: 'success',
-      data: user
+      data: category
     })
   } catch (error) {
     res.status(400).json({

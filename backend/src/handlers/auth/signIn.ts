@@ -38,5 +38,7 @@ export const signIn = async (req: Request, res: Response) => {
       status: 'error',
       message: error.message
     })
+  } finally {
+    await prisma.$disconnect();
   }
 }

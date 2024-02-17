@@ -63,11 +63,13 @@ model Project {
 }
 
 model Category {
-  id          String  @id @default(cuid())
-  title       String  @unique @db.VarChar(255)
-  description String
-  project     Project @relation(fields: [categoryId], references: [id])
-  categoryId  String
+  id          String   @id @default(cuid())
+  title       String   @unique @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String?
+  project     Project? @relation(fields: [categoryId], references: [id])
+  categoryId  String?
 }
 
 model Task {

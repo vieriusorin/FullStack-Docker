@@ -7,6 +7,7 @@ import { errorMiddleware } from './middlewares';
 import { signInRouter } from './routes/auth/signIn/signIn';
 import { signUpRouter } from './routes/auth/signUp/signUp';
 import { usersRouter } from './routes/users';
+import { categoryRouter } from './routes/category';
 
 const app = express();
 const bodyParser = require('body-parser');
@@ -27,7 +28,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(signUpRouter)
 
 app.use(signInRouter)
+
 app.use(usersRouter)
+
+app.use(categoryRouter)
 
 app.use(errorMiddleware)
 

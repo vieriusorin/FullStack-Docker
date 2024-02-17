@@ -1,26 +1,28 @@
 import { Request, Response } from 'express';
 import prisma from '../../db';
 
-export const detail = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const deleteCategory = async (req: Request, res: Response) => {
   try {
-    const user = await prisma.user.findUnique({
+    const { id } = req.params;
+    const category = await prisma.category.findUnique({
       where: { id },
     });
 
-    if (!user) {
+    if (!category) {
       return res.status(404).json({
         status: 'error',
-        message: 'User not found'
-      });
+        message: 'Category not found'
+      })
     }
+
+    await prisma.category.delete({
+      where: { id }
+    })
 
     res.status(200).json({
       status: 'success',
-      user
+      message: 'Category deleted successfully'
     })
-
-
   } catch (error) {
     res.status(400).json({
       status: 'error',

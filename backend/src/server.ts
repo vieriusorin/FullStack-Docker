@@ -4,8 +4,9 @@ import cors from "cors";
 import bodyParser from "body-parser";
 
 import { errorMiddleware } from './middlewares';
-import { signInRouter } from './routes/signIn/signIn';
-import { signUpRouter } from './routes/signUp/signUp';
+import { signInRouter } from './routes/auth/signIn/signIn';
+import { signUpRouter } from './routes/auth/signUp/signUp';
+import { usersRouter } from './routes/users';
 
 const app = express();
 const bodyParser = require('body-parser');
@@ -26,6 +27,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(signUpRouter)
 
 app.use(signInRouter)
+app.use(usersRouter)
 
 app.use(errorMiddleware)
 

@@ -1,7 +1,7 @@
 import express from 'express';
-import { signIn } from '../../handlers/auth';
-import { signInLimiter } from '../../middlewares';
-import { validateRequest } from '../../middlewares/validate-request';
+import { signIn } from '../../../handlers/auth';
+import { signInLimiter } from '../../../middlewares';
+import { validateRequest } from '../../../middlewares/validate-request';
 import { signInSchema } from './schema';
 
 const router = express.Router();

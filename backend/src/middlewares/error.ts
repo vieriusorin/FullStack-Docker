@@ -1,14 +1,21 @@
 import { validationResult } from "express-validator";
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express';
 
-export const errorMiddleware = (err, req: Request, res: Response, next: NextFunction) => {
-  console.log(err)
+export const errorMiddleware = async (
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
+  console.log('tedt')
   if (!errors.isEmpty()) {
     return res.status(400).json({
       status: 'error',
       errors: errors.array(),
     });
   }
-  next();
+
+  console.log('Executing error handling middleware');
+  res.status(500).json({ error: 'Internal Server Error' });
 };

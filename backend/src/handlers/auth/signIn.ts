@@ -11,6 +11,13 @@ export const signIn = async (req: Request, res: Response) => {
       }
     });
 
+    if (!user) {
+      return res.status(401).json({
+        status: 'error',
+        message: 'User not found'
+      });
+    }
+
     const isValid = await comparePasswords(password, user.password);
 
     if (!isValid) {

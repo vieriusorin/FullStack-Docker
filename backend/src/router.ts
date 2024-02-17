@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { signUp } from './handlers/user';
+import { signUp } from './handlers/auth';
 
 const router = Router();
 

@@ -8,6 +8,7 @@ import { signInRouter } from './routes/auth/signIn/signIn';
 import { signUpRouter } from './routes/auth/signUp/signUp';
 import { usersRouter } from './routes/users';
 import { categoryRouter } from './routes/category';
+import { taskRouter } from './routes/task/task';
 
 const app = express();
 const bodyParser = require('body-parser');
@@ -32,6 +33,8 @@ app.use(signInRouter)
 app.use(usersRouter)
 
 app.use(categoryRouter)
+
+app.use(taskRouter)
 
 app.use(errorMiddleware)
 

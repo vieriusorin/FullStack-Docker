@@ -21,6 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "lodash.merge": "^4.6.2",
     "morgan": "^1.10.0",
+    "passport": "^0.7.0",
+    "passport-google": "^0.3.0",
     "prisma": "^5.9.1",
     "ts-jest": "^29.1.2"
   },

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Task" ADD COLUMN     "status" "INVOICE_STATUS" NOT NULL DEFAULT 'UNPAID';

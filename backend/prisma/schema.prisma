@@ -29,17 +29,19 @@ enum USER_ROLE {
 }
 
 model User {
-  id       String     @id @default(uuid())
-  username String?    @unique @db.VarChar(255)
-  name     String?
-  email    String     @unique
-  password String
-  projects Project[]
-  task     Task[]
-  position String?
-  invoices Invoice[]
-  comments Comment[]
-  role     USER_ROLE? @default(ADMIN)
+  id        String     @id @default(uuid())
+  username  String?    @unique @db.VarChar(255)
+  name      String?
+  email     String     @unique
+  password  String?
+  googleId  String?    @unique
+  avatarUrl String?
+  projects  Project[]
+  task      Task[]
+  position  String?
+  invoices  Invoice[]
+  comments  Comment[]
+  role      USER_ROLE? @default(ADMIN)
 }
 
 model Project {

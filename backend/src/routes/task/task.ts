@@ -1,7 +1,7 @@
 import express from 'express';
 import { validateRequest } from '../../middlewares/validate-request';
 import { taskValidator } from './schema';
-import { create, readTasks, readTask, deleteTask } from '../../handlers/task';
+import { create, readTasks, readTask, deleteTask, updateTask } from '../../handlers/task';
 
 const router = express.Router();
 
@@ -27,7 +27,8 @@ router.get(
 router.patch(
   '/api/tasks/:id',
   taskValidator,
-  validateRequest
+  validateRequest,
+  updateTask
 )
 
 router.delete(

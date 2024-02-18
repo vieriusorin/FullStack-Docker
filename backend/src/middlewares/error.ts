@@ -8,7 +8,7 @@ export const errorMiddleware = async (
   next: NextFunction
 ) => {
   const errors = validationResult(req);
-  console.log('tedt')
+
   if (!errors.isEmpty()) {
     return res.status(400).json({
       status: 'error',

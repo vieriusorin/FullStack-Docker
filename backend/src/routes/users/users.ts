@@ -2,8 +2,7 @@ import express from 'express';
 import { validateRequest } from '../../middlewares/validate-request';
 import { detail, update, users, deleteUser } from '../../handlers/users';
 import { userUpdateValidator } from './schema';
-import { isAuthenticated } from '../../middlewares/authenticated';
-import { protectedRoute } from '../../middlewares/protected-route';
+import { currentUser } from '../../handlers/auth/currentUser';
 
 const router = express.Router();
 
@@ -19,11 +18,15 @@ router.get(
   detail
 )
 
+router.get(
+  '/api/current-user',
+  validateRequest,
+  currentUser
+)
+
 router.patch(
   '/api/users/:id',
   validateRequest,
-  isAuthenticated,
-  protectedRoute,
   userUpdateValidator,
   update
 )

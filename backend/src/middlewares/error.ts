@@ -16,6 +16,8 @@ export const errorMiddleware = async (
     });
   }
 
+  console.log(err)
+
   console.log('Executing error handling middleware');
   res.status(500).json({ error: 'Internal Server Error' });
 };

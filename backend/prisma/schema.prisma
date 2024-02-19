@@ -47,7 +47,7 @@ model User {
 model Project {
   id           String         @id @default(cuid())
   title        String
-  description  String
+  description  String?
   completed    Boolean        @default(false)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -58,7 +58,7 @@ model Project {
   startProject DateTime?
   endProject   DateTime?
   tasks        Task[]
-  client       String
+  client       String?
   invoices     Invoice[]
   stakeholder  Stakeholder[]
   comments     Comment[]
@@ -89,6 +89,8 @@ model Task {
 model Invoice {
   id          String         @id @default(cuid())
   title       String         @unique @db.VarChar(255)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
   description String
   amount      Float
   dueDate     DateTime
@@ -100,12 +102,14 @@ model Invoice {
 }
 
 model Stakeholder {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
   email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   role      String
   projectId String
-  projects  Project @relation(fields: [projectId], references: [id])
+  projects  Project  @relation(fields: [projectId], references: [id])
 }
 
 model Comment {

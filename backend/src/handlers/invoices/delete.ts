@@ -1,30 +1,27 @@
 import { Request, Response } from 'express';
 import prisma from '../../db';
 
-export const updateTask = async (req: Request, res: Response) => {
+export const deleteInvoice = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { title, description, project, user } = req.body;
-
-    const task = await prisma.task.update({
+    const invoice = await prisma.invoice.findUnique({
       where: { id },
-      data: {
-        title,
-        description,
-        project,
-        user,
-      },
     });
 
-    if (!task) {
+    if (!invoice) {
       return res.status(404).json({
         status: 'error',
-        message: 'Task not found'
+        message: 'Invoice not found'
       })
     }
+
+    await prisma.invoice.delete({
+      where: { id }
+    })
+
     res.status(200).json({
       status: 'success',
-      data: task
+      message: 'Invoice deleted successfully'
     })
   } catch (error) {
     res.status(400).json({

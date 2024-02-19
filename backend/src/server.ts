@@ -11,6 +11,9 @@ import { usersRouter } from './routes/users';
 import { categoryRouter } from './routes/category';
 import { taskRouter } from './routes/task/task';
 import { googleLoginRouter } from './routes/auth/google';
+import { projectRouter } from './routes/projects';
+import { invoiceRouter } from './routes/invoice';
+import { stakeholderRouter } from './routes/stakeholder';
 
 const xss = require('xss-clean');
 
@@ -38,6 +41,9 @@ app.use(signInRouter);
 app.use(usersRouter);
 app.use(categoryRouter);
 app.use(taskRouter);
+app.use(projectRouter);
+app.use(invoiceRouter);
+app.use(stakeholderRouter);
 app.use(errorMiddleware);
 
 export default app;

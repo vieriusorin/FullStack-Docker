@@ -1,30 +1,26 @@
 import { Request, Response } from 'express';
 import prisma from '../../db';
 
-export const updateTask = async (req: Request, res: Response) => {
+export const updateProject = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { title, description, project, user } = req.body;
-
-    const task = await prisma.task.update({
+    const project = await prisma.project.update({
       where: { id },
       data: {
-        title,
-        description,
-        project,
-        user,
+        ...req.body,
+        userId: req.user.id,
       },
     });
 
-    if (!task) {
+    if (!project) {
       return res.status(404).json({
         status: 'error',
-        message: 'Task not found'
+        message: 'Project not found'
       })
     }
     res.status(200).json({
       status: 'success',
-      data: task
+      data: project
     })
   } catch (error) {
     res.status(400).json({

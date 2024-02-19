@@ -1,5 +1,5 @@
 import express from 'express';
-import { validateRequest } from '../../middlewares/validate-request';
+import { validateRequest, protectedRoute } from '../../middlewares';
 import { taskValidator } from './schema';
 import { create, readTasks, readTask, deleteTask, updateTask } from '../../handlers/task';
 
@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post(
   '/api/tasks',
+  protectedRoute,
   taskValidator,
   validateRequest,
   create
@@ -14,18 +15,21 @@ router.post(
 
 router.get(
   '/api/tasks',
+  protectedRoute,
   validateRequest,
   readTasks
 )
 
 router.get(
   '/api/tasks/:id',
+  protectedRoute,
   validateRequest,
   readTask
 )
 
 router.patch(
   '/api/tasks/:id',
+  protectedRoute,
   taskValidator,
   validateRequest,
   updateTask
@@ -33,6 +37,7 @@ router.patch(
 
 router.delete(
   '/api/tasks/:id',
+  protectedRoute,
   validateRequest,
   deleteTask
 )

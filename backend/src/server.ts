@@ -11,23 +11,10 @@ import { usersRouter } from './routes/users';
 import { categoryRouter } from './routes/category';
 import { taskRouter } from './routes/task/task';
 import { googleLoginRouter } from './routes/auth/google';
-const cookieParser = require('cookie-parser');
 
-const session = require('express-session');
 const xss = require('xss-clean');
 
 const app = express();
-
-app.use(cookieParser());
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false, // Optimize for production
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000, // Set the session cookie expiration time (1 hour in this example)
-    httpOnly: true,
-  },
-}));
 
 app.use(cors());
 

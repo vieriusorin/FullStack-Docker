@@ -29,6 +29,7 @@
     "passport-google": "^0.3.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
     "prisma": "^5.9.1",
     "ts-jest": "^29.1.2",
     "xss-clean": "^0.1.4"

@@ -1,36 +1,35 @@
 import express from 'express';
-import { validateRequest } from '../../middlewares/validate-request';
+import { validateRequest, protectedRoute } from '../../middlewares';
 import { detail, update, users, deleteUser } from '../../handlers/users';
 import { userUpdateValidator } from './schema';
 import { currentUser } from '../../handlers/auth/currentUser';
-import { authMiddleware } from '../../middlewares';
 
 const router = express.Router();
 
 router.get(
   '/api/users',
-  authMiddleware,
+  protectedRoute,
   validateRequest,
   users
 )
 
 router.get(
   '/api/users/:id',
-  authMiddleware,
+  protectedRoute,
   validateRequest,
   detail
 )
 
 router.get(
   '/api/current-user',
-  authMiddleware,
+  protectedRoute,
   validateRequest,
   currentUser
 )
 
 router.patch(
   '/api/users/:id',
-  authMiddleware,
+  protectedRoute,
   validateRequest,
   userUpdateValidator,
   update
@@ -38,7 +37,6 @@ router.patch(
 
 router.delete(
   '/api/users/:id',
-  authMiddleware,
   validateRequest,
   deleteUser
 )

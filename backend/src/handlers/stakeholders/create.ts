@@ -5,8 +5,7 @@ export const create = async (req: Request, res: Response) => {
   try {
     const stakeholder = await prisma.stakeholder.create({
       data: {
-        ...req.body,
-        userId: req.user.id,
+        ...req.body
       }
     });
 

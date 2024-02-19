@@ -33,6 +33,8 @@ export const signIn = async (req: Request, res: Response) => {
       status: 'success',
       token
     });
+
+    return res.redirect('/dashboard');
   } catch (error) {
     res.status(400).json({
       status: 'error',

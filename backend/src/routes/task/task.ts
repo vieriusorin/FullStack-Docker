@@ -1,7 +1,7 @@
 import express from 'express';
 import { validateRequest, protectedRoute } from '../../middlewares';
 import { taskValidator } from './schema';
-import { create, readTasks, readTask, deleteTask, updateTask } from '../../handlers/task';
+import { create, readTasks, readTask, deleteTask, updateTask, readProjectTasks } from '../../handlers/task';
 
 const router = express.Router();
 
@@ -25,6 +25,13 @@ router.get(
   protectedRoute,
   validateRequest,
   readTask
+)
+
+router.get(
+  '/api/projects/:projectId/tasks',
+  protectedRoute,
+  validateRequest,
+  readProjectTasks
 )
 
 router.patch(

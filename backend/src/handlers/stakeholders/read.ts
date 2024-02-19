@@ -64,3 +64,36 @@ export const readStakeholder = async (req: Request, res: Response) => {
     await prisma.$disconnect();
   }
 }
+
+export const readProjectStakeholders = async (req: Request, res: Response) => {
+  try {
+    const stakeholders = await prisma.stakeholder.findMany({
+      where: {
+        projectId: req.params.projectId
+      }
+    });
+
+    if (!stakeholders) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'No stakeholders found'
+      })
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        stakeholders,
+        count: stakeholders.length
+      },
+    });
+  }
+  catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error.message
+    })
+  } finally {
+    await prisma.$disconnect();
+  }
+}

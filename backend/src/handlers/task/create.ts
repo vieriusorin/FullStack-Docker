@@ -3,13 +3,9 @@ import prisma from "../../db";
 
 export const create = async (req: Request, res: Response) => {
   try {
-    const { title, description, project } = req.body;
-
     const category = await prisma.task.create({
       data: {
-        title,
-        description,
-        project
+        ...req.body
       },
     });
 
